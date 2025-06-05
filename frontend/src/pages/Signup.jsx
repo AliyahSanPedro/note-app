@@ -34,8 +34,8 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="border shadow p-6 w-80 bg-white">
+    <div className="flex justify-center items-center min-h-screen bg-pink-100">
+      <div className="border shadow p-6 w-80 bg-pink-300">
         <h2 className="text-2xl font-bold mb-4">Signup</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -44,7 +44,7 @@ const Signup = () => {
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-3 py-2 border rounded"
+              className="w-full px-3 py-2 border rounded shadow bg-pink-200"
               placeholder="Enter Name"
               required
             />
@@ -55,7 +55,7 @@ const Signup = () => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 border rounded"
+              className="w-full px-3 py-2 border rounded shadow bg-pink-200"
               placeholder="Enter Email"
               required
             />
@@ -66,7 +66,7 @@ const Signup = () => {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-3 py-2 border rounded"
+              className="w-full px-3 py-2 border rounded shadow bg-pink-200"
               placeholder="Enter Password"
               required
             />
@@ -74,13 +74,13 @@ const Signup = () => {
           <div className="mb-4">
             <button
               type="submit"
-              className="w-full bg-teal-600 text-white py-2 rounded hover:bg-teal-700 transition duration-200"
+              className="w-full bg-pink-600 text-white py-2 rounded hover:bg-pink-700 transition duration-200"
             >
               Signup
             </button>
             <p className="text-center mt-2">
               Already have an account?{" "}
-              <Link to="/login" className="text-blue-600 underline">
+              <Link to="/login" className="text-pink-600 underline">
                 Login
               </Link>
             </p>

@@ -4,12 +4,14 @@ import Navbar from '../components/Navbar';
 import NoteModal from '../components/NoteModal';
 import NoteCard from '../components/NoteCard';
 
+
 const Home = () => {
   const [isModalOpen, setModalOpen] = useState(false);
+  const [filteredNotes, setFilteredNotes] = useState([]);
   const [notes, setNotes] = useState([]);
   const [currentNote, setCurrentNote] = useState(null);
+  const [query, setQuery] = useState('');
 
-  useEffect(() => {
   const fetchNotes = async () => {
     try {
       const { data } = await axios.get('http://localhost:5000/api/note');
@@ -20,11 +22,18 @@ const Home = () => {
     }
   };
 
-  fetchNotes();
-}, []);
+  useEffect(() => {
+    fetchNotes();
+  }, []);
 
-
-
+useEffect(() => {
+  setFilteredNotes(
+    notes.filter(note =>
+      note.title.toLowerCase().includes(query.toLowerCase()) ||
+      note.description.toLowerCase().includes(query.toLowerCase())
+    )
+  );
+}, [query, notes]);
 
   const closeModal = () => {
     setModalOpen(false);
@@ -43,7 +52,7 @@ const Home = () => {
         { title, description },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`
+            Authorization: `Bearer ${localStorage.getItem("token")}`
           }
         }
       );
@@ -63,6 +72,23 @@ const Home = () => {
       alert(error.response?.data?.message);
     }
   };
+
+const deleteNote = async (id) => {
+  try {
+    const response = await axios.delete(`http://localhost:5000/api/note/${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`
+      }
+    });
+
+    if (response.data.success) {
+      fetchNotes();
+    }
+  } catch (error) {
+    console.error('Note delete error', error);
+    alert(error.response?.data?.message || 'An error occurred while deleting the note.');
+  }
+};
 
 const eidNote = async (id, title, description) => {
   try {
@@ -90,16 +116,17 @@ const eidNote = async (id, title, description) => {
 
 
   return (
-    <div className='bg-gray-100 min-h-screen'>
-      <Navbar />
+    <div className='bg-pink-100 min-h-screen'>
+      <Navbar setQuery={setQuery} />
       <div className='px-8 pt-4 grid grid-cols-1 md:grid-cols-3 gap-6'>
-        {notes.map(note => (
+        {filteredNotes.length > 0 ? filteredNotes.map(note => (
           <NoteCard
             key={note._id}
             note={note}
             onEdit={onEdit}
+            deleteNote={deleteNote}
           />
-        ))}
+        )): <p> No notes </p>}
       </div>
 
       <button

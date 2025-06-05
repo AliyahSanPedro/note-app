@@ -2,11 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/ContextProvider';
 
-const Navbar = () => {
+const Navbar = ({setQuery}) => {
   const { user } = useAuth();
 
   return (
-    <nav className="bg-gray-800 p-4 text-white flex justify-between items-center">
+    <nav className="bg-pink-400 p-4 text-white flex justify-between items-center">
       {/* Left Section: Logo + Search */}
       <div className="flex items-center space-x-4">
         <div className="text-xl font-bold">
@@ -15,7 +15,8 @@ const Navbar = () => {
         <input
           type="text"
           placeholder="Search notes..."
-          className="bg-gray-600 px-4 py-2 rounded"
+          onChange={(e) => setQuery(e.target.value)}
+          className="bg-pink-700 px-4 py-2 rounded"
         />
       </div>
 
@@ -23,17 +24,17 @@ const Navbar = () => {
       <div className="flex items-center space-x-4">
         {!user ? (
           <>
-            <Link to="/login" className="bg-blue-500 px-4 py-2 rounded">
+            <Link to="/login" className="bg-pink-700 px-4 py-2 rounded">
               Login
             </Link>
-            <Link to="/signup" className="bg-green-500 px-4 py-2 rounded">
+            <Link to="/signup" className="bg-pink-700 px-4 py-2 rounded">
               Signup
             </Link>
           </>
         ) : (
           <>
             <span className="mr-4">{user.name}</span>
-            <button className="bg-red-500 px-4 py-2 rounded">
+            <button className="bg-pink-700 px-4 py-2 rounded">
               Logout
             </button>
           </>
